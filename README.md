@@ -8,19 +8,19 @@ A local, offline facial authentication PAM subsystem with IR+RGB support, multi-
 
 ---
 
-## 🎯 Features
+## Features
 
-- **🔒 Local & Offline** - No cloud dependencies, all processing on-device
-- **👁️ Multi-Signal Liveness** - Blink detection, optical flow, texture analysis, IR reflectance
-- **🔐 Encrypted Templates** - XChaCha20-Poly1305 AEAD with TPM binding
-- **⚡ Fast Authentication** - <2s latency on typical laptop CPU
-- **🛡️ Security First** - Memory-safe Rust, zeroized secrets, rate limiting
-- **🔄 Password Fallback** - Always maintains PAM password authentication
-- **📦 Lightweight** - <25MB binary, <8KB templates per user
+- **Local & Offline**- No cloud dependencies, all processing on-device
+- **Multi-Signal Liveness**- Blink detection, optical flow, texture analysis, IR reflectance
+- **Encrypted Templates**- XChaCha20-Poly1305 AEAD with TPM binding
+- **Fast Authentication**- <2s latency on typical laptop CPU
+- **Security First**- Memory-safe Rust, zeroized secrets, rate limiting
+- **Password Fallback**- Always maintains PAM password authentication
+- **Lightweight**- <25MB binary, <8KB templates per user
 
 ---
 
-## 📋 Requirements
+## Requirements
 
 ### Hardware
 - Webcam (RGB camera required, IR camera optional)
@@ -37,7 +37,7 @@ A local, offline facial authentication PAM subsystem with IR+RGB support, multi-
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Install Dependencies
 
@@ -108,7 +108,7 @@ sudo ./target/release/slfam-test-auth --user $USER
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 Edit `/etc/slfam/config.toml`:
 
@@ -133,9 +133,9 @@ See [config.example.toml](slfam/config.example.toml) for all options.
 
 ---
 
-## 🔐 PAM Integration
+## PAM Integration
 
-### ⚠️ WARNING: Test in VM First!
+### WARNING: Test in VM First!
 
 **NEVER configure PAM on your main system without testing in a VM first!**
 
@@ -189,7 +189,7 @@ sudo /usr/bin/slfam-disable
 
 ---
 
-## 📊 Performance
+## Performance
 
 Typical performance on Intel i5-8250U (4 cores, 1.6GHz):
 
@@ -199,13 +199,13 @@ Typical performance on Intel i5-8250U (4 cores, 1.6GHz):
 | Landmark Detection | 30ms | 8% |
 | Embedding Generation | 50ms | 12% |
 | Liveness Check | 200ms | 10% |
-| **Total Auth** | **~1.5s** | **<30%** |
+| **Total Auth**| **~1.5s**| **<30%**|
 
 Template size: ~6KB per user (512D embedding encrypted)
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Unit Tests
 
@@ -240,7 +240,7 @@ Test against common attacks:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 slfam/
@@ -264,7 +264,7 @@ slfam/
 
 ---
 
-## 🔒 Security
+## Security
 
 ### Threat Model
 
@@ -283,25 +283,25 @@ slfam/
 
 ### Security Features
 
-- ✅ Memory-safe Rust implementation
-- ✅ Secrets zeroized after use
-- ✅ Templates encrypted with XChaCha20-Poly1305
-- ✅ TPM-bound keys (optional)
-- ✅ Rate limiting and lockout
-- ✅ Audit logging (no biometric data)
-- ✅ No network communication
+-  Memory-safe Rust implementation
+-  Secrets zeroized after use
+-  Templates encrypted with XChaCha20-Poly1305
+-  TPM-bound keys (optional)
+-  Rate limiting and lockout
+-  Audit logging (no biometric data)
+-  No network communication
 
 ### Recommendations
 
-1. **Use TPM** for key storage in production
-2. **Enable all liveness checks** for higher security
-3. **Set strict thresholds** (0.85+) for sensitive systems
-4. **Combine with FIDO2** for high-assurance authentication
-5. **Regular security audits** before production deployment
+1. **Use TPM**for key storage in production
+2. **Enable all liveness checks**for higher security
+3. **Set strict thresholds**(0.85+) for sensitive systems
+4. **Combine with FIDO2**for high-assurance authentication
+5. **Regular security audits**before production deployment
 
 ---
 
-## 📖 Documentation
+## Documentation
 
 - [Software Requirements & Goals](docs/SoftReq&Goals.md) - Complete technical blueprint
 - [Tech Stack](docs/TechStack.md) - Technology choices and rationale
@@ -311,7 +311,7 @@ slfam/
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions welcome! Please:
 
@@ -323,13 +323,13 @@ Contributions welcome! Please:
 
 ---
 
-## 📜 License
+## License
 
 GPL-3.0 License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 This software is provided "as is" without warranty. Biometric authentication is a convenience feature and should not be the sole authentication method for high-security systems. Always maintain password fallback and consider multi-factor authentication for critical applications.
 
@@ -342,7 +342,7 @@ This software is provided "as is" without warranty. Biometric authentication is 
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - ONNX Runtime team
 - InsightFace project
@@ -351,7 +351,7 @@ This software is provided "as is" without warranty. Biometric authentication is 
 
 ---
 
-## 📞 Support
+## Support
 
 - Issues: GitHub Issues
 - Documentation: See docs/ directory
@@ -359,4 +359,4 @@ This software is provided "as is" without warranty. Biometric authentication is 
 
 ---
 
-**Built with ❤️ and Rust**
+**Built with  and Rust**
