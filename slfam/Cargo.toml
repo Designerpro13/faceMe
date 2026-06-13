@@ -1,0 +1,87 @@
+[package]
+name = "slfam"
+version = "0.1.0"
+edition = "2021"
+authors = ["SLFAM Team"]
+description = "Secure Lightweight Facial Authentication Module - A local, offline PAM-integrated facial authentication system"
+license = "GPL-3.0"
+readme = "README.md"
+repository = "https://github.com/slfam/slfam"
+keywords = ["pam", "authentication", "face-recognition", "biometric", "security"]
+categories = ["authentication", "cryptography"]
+
+[lib]
+name = "slfam"
+path = "src/lib.rs"
+crate-type = ["lib", "cdylib"]
+
+[[bin]]
+name = "slfam-enroll"
+path = "src/bin/slfam-enroll.rs"
+
+[dependencies]
+# ML Inference
+ort = { version = "2.0.0-rc.11", default-features = false, features = ["ndarray"] }
+ndarray = "0.16"
+
+# Cryptography
+chacha20poly1305 = "0.10"
+argon2 = "0.5"
+rand = "0.8"
+rand_chacha = "0.3"
+
+# CLI & Serialization
+clap = { version = "4.5", features = ["derive", "env"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+# Security
+zeroize = { version = "1.8", features = ["derive"] }
+
+# Error Handling
+thiserror = "1.0"
+
+# Logging
+log = "0.4"
+env_logger = "0.11"
+
+# Utilities
+chrono = { version = "0.4", features = ["serde"] }
+tempfile = "3.12"
+parking_lot = "0.12"
+byteorder = "1.5"
+image = { version = "0.25", default-features = false, features = ["jpeg", "png"] }
+
+# Linux-specific
+nix = { version = "0.29", features = ["fs", "ioctl", "poll"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+v4l = { version = "0.14", optional = true }
+
+[features]
+default = []
+v4l2 = ["v4l"]
+tpm = []
+dev-mode = []
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+tempfile = "3.12"
+rand = "0.8"
+proptest = "1.5"
+mockall = "0.13"
+
+[profile.dev]
+opt-level = 1
+debug = true
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[profile.test]
+opt-level = 1
