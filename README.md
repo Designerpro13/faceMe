@@ -355,8 +355,8 @@ This software is provided "as is" without warranty. Biometric authentication is 
 
 - Issues: GitHub Issues
 - Documentation: See docs/ directory
-- Security: Report privately to security@example.com
+- Security: Report privately to quiver-shed-repave@duck.com
 
 ---
 
-**Built with  and Rust**
+**Built with 🤍 and Rust**
