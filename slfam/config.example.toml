@@ -1,0 +1,80 @@
+# SLFAM Configuration File
+# Secure Lightweight Facial Authentication Module
+#
+# Copy to /etc/slfam/config.toml and adjust as needed.
+# All values shown are the defaults — omit any line you don't need to override.
+
+[general]
+template_dir = "/var/lib/slfam/templates"
+model_dir    = "/usr/share/slfam/models"
+log_file     = "/var/log/slfam/audit.log"
+log_level    = "info"   # error | warn | info | debug | trace
+debug_mode   = false
+
+[camera]
+device_id           = 0       # index (0 = /dev/video0) or "/dev/video0"
+# ir_device_id      = 1       # uncomment and set if you have an IR camera
+device_ids          = [0, 1, 2]   # fallback scan order when auto_detect = true
+capture_timeout_ms  = 5000
+timeout_secs        = 30
+frame_width         = 640
+frame_height        = 480
+fps                 = 30
+prefer_ir           = true
+auto_detect         = true
+
+[detection]
+confidence_threshold = 0.9
+max_faces            = 1       # must be 1 for authentication
+min_face_size        = 80      # pixels
+detection_model      = "retinaface.onnx"
+landmark_model       = "landmark_106_2d.onnx"  # from buffalo_l pack (2d106det.onnx renamed)
+embedding_model      = "mobilefacenet.onnx"
+enable_alignment     = true
+
+[liveness]
+ear_threshold                    = 0.2    # Eye Aspect Ratio — lower = stricter blink
+ear_consecutive_frames           = 3
+optical_flow_variance_threshold  = 0.05
+optical_flow_frames              = 10
+enable_lbp                       = true
+enable_ir_check                  = false  # set true if ir_device_id is configured
+require_ir                       = false
+enable_challenge                 = false
+timeout_ms                       = 3000
+strict_mode                      = false  # true = ALL checks must pass
+
+[matching]
+normal_threshold        = 0.75   # cosine similarity threshold (0.0–1.0)
+high_security_threshold = 0.85   # used when use_high_security = true
+use_high_security       = false
+embedding_model         = "mobilefacenet.onnx"
+embedding_dim           = 512
+fusion_strategy         = "max"  # max | average | weighted
+min_quality_score       = 0.5
+
+[security]
+max_attempts              = 5
+lockout_duration_sec      = 900  # 15 minutes
+enable_rate_limiting      = true
+high_security_mode        = false
+use_tpm                   = false
+# tpm_key_handle          = ""   # uncomment to pin a specific TPM key handle
+key_derivation_iterations = 100000
+enable_zeroization        = true
+emergency_disable_file    = "/etc/slfam/disabled"  # touch this file to disable module
+
+[enrollment]
+required_samples          = 5
+sample_interval_sec       = 1
+require_pose_variation    = true
+require_lighting_variation = false
+max_enrollment_attempts   = 3
+
+[dev]
+# WARNING: all dev options are insecure — never enable in production
+dev_mode         = false
+use_mock_camera  = false
+mock_image_dir   = "/usr/share/slfam/test_images"
+skip_liveness    = false
+skip_encryption  = false
