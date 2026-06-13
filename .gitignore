@@ -1,0 +1,14 @@
+# Build artifacts
+slfam/target/
+
+# Editor backups
+*~
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# ONNX models (downloaded at setup time)
+/usr/share/slfam/models/
