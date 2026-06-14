@@ -5,7 +5,7 @@
 use clap::{Parser, Subcommand};
 use slfam::camera::{Camera, CameraType, enumerate_cameras};
 use slfam::config::Config;
-use slfam::crypto::{generate_key, KeyDerivation, TpmKeyDerivation};
+use slfam::crypto::{KeyDerivation, TpmKeyDerivation};
 use slfam::detection::FaceDetectionPipeline;
 use slfam::embedding::EmbeddingGenerator;
 use slfam::error::Result;
@@ -294,7 +294,7 @@ fn enroll_user(
     Ok(())
 }
 
-fn remove_user(config: &Config, user: &str, verbose: bool) -> Result<()> {
+fn remove_user(config: &Config, user: &str, _verbose: bool) -> Result<()> {
     let mut store = TemplateStore::new(&config.general.template_dir)?;
 
     if !store.exists(user) {
@@ -318,7 +318,7 @@ fn remove_user(config: &Config, user: &str, verbose: bool) -> Result<()> {
     Ok(())
 }
 
-fn list_users(config: &Config, verbose: bool) -> Result<()> {
+fn list_users(config: &Config, _verbose: bool) -> Result<()> {
     let store = TemplateStore::new(&config.general.template_dir)?;
     let users = store.list_users()?;
 
@@ -334,7 +334,7 @@ fn list_users(config: &Config, verbose: bool) -> Result<()> {
     Ok(())
 }
 
-fn update_user(config: &Config, user: &str, samples: u32, verbose: bool) -> Result<()> {
+fn update_user(config: &Config, user: &str, samples: u32, _verbose: bool) -> Result<()> {
     let mut store = TemplateStore::new(&config.general.template_dir)?;
 
     if !store.exists(user) {
@@ -348,7 +348,7 @@ fn update_user(config: &Config, user: &str, samples: u32, verbose: bool) -> Resu
     let key_derivation = TpmKeyDerivation::new(&key_path, config.security.use_tpm)?;
     let key = key_derivation.derive_key(user, b"slfam-auth")?;
     
-    let mut template = store.load(user, &key)?;
+    let template = store.load(user, &key)?;
 
     println!("Updating enrollment for '{}'", user);
     println!("Current samples: {}", template.embeddings().len());
@@ -437,7 +437,7 @@ fn test_detection(config: &Config, frames: u32, verbose: bool) -> Result<()> {
     )?;
 
     let mut successes = 0;
-    let mut failures = 0;
+    let mut _failures = 0;
 
     for i in 0..frames {
         print!("\rFrame {}/{}: ", i + 1, frames);
@@ -452,13 +452,13 @@ fn test_detection(config: &Config, frames: u32, verbose: bool) -> Result<()> {
                             result.face_bbox.x, result.face_bbox.y);
                     }
                     Err(e) => {
-                        failures += 1;
+                        _failures += 1;
                         print!("No face: {}", e);
                     }
                 }
             }
             Err(e) => {
-                failures += 1;
+                _failures += 1;
                 print!("Capture failed: {}", e);
             }
         }

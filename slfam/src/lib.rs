@@ -31,9 +31,12 @@
 //! - [`template`]: Template storage and management
 //! - [`pam`]: PAM module implementation
 
-#![warn(missing_docs)]
+#![allow(missing_docs)]
 #![warn(rust_2018_idioms)]
 #![deny(unsafe_op_in_unsafe_fn)]
+#![allow(dead_code)]
+#![allow(unused_imports)]
+#![allow(unused_variables)]
 
 pub mod camera;
 pub mod config;
