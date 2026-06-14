@@ -37,9 +37,7 @@ pub use mock::MockCamera;
 
 use crate::config::CameraConfig;
 use crate::error::{CameraError, Result};
-use parking_lot::Mutex;
 use std::path::PathBuf;
-use std::sync::Arc;
 use std::time::{Duration, Instant};
 
 /// Camera trait for unified access to different camera backends
@@ -96,14 +94,16 @@ impl DeviceLock {
             .create(true)
             .mode(0o644)
             .open(&lock_path)
-            .map_err(|e| CameraError::DeviceBusy { 
+            .map_err(|_e| CameraError::DeviceBusy { 
                 path: path.clone() 
             })?;
         
         // Try to acquire exclusive lock (non-blocking)
+        #[allow(deprecated)]
         use nix::fcntl::{flock, FlockArg};
         use std::os::unix::io::AsRawFd;
-        
+
+        #[allow(deprecated)]
         flock(lock_file.as_raw_fd(), FlockArg::LockExclusiveNonblock)
             .map_err(|_| CameraError::DeviceBusy { path: path.clone() })?;
         
@@ -161,14 +161,14 @@ impl Camera {
     /// # Errors
     ///
     /// Returns an error if the camera cannot be opened
-    pub fn open_path(path: &PathBuf, config: CameraConfig, camera_type: CameraType) -> Result<Self> {
+    pub fn open_path(path: &PathBuf, _config: CameraConfig, _camera_type: CameraType) -> Result<Self> {
         // Check if device exists
         if !path.exists() {
             return Err(CameraError::DeviceNotFound { path: path.clone() }.into());
         }
         
         // Acquire exclusive lock
-        let lock = DeviceLock::acquire(path)?;
+        let _lock = DeviceLock::acquire(path)?;
         
         // Create V4L2 backend
         #[cfg(all(target_os = "linux", feature = "v4l2"))]
@@ -215,7 +215,7 @@ impl Camera {
                     self.last_capture = Some(Instant::now());
                     return Ok(frame);
                 }
-                Err(e) if start.elapsed() < timeout => {
+                Err(_e) if start.elapsed() < timeout => {
                     // Retry if within timeout
                     std::thread::sleep(Duration::from_millis(10));
                     continue;
@@ -309,7 +309,7 @@ impl Drop for Camera {
 ///
 /// A vector of camera information for all detected cameras
 pub fn enumerate_cameras() -> Vec<CameraInfo> {
-    let mut cameras = Vec::new();
+    let cameras = Vec::new();
     
     #[cfg(all(target_os = "linux", feature = "v4l2"))]
     {

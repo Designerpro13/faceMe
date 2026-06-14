@@ -3,7 +3,7 @@
 //! Compares face embeddings and makes authentication decisions.
 
 use crate::config::MatchingConfig;
-use crate::embedding::{cosine_similarity, FaceEmbedding};
+use crate::embedding::FaceEmbedding;
 use crate::error::{MatchingError, Result};
 use std::time::{Duration, Instant};
 
@@ -247,7 +247,7 @@ impl IdentificationMatcher {
     ) -> Vec<IdentificationResult<'a>> {
         let threshold = self.matcher.current_threshold();
         
-        let mut results: Vec<IdentificationResult> = gallery
+        let mut results: Vec<IdentificationResult<'_>> = gallery
             .iter()
             .filter_map(|(identity, embeddings)| {
                 if embeddings.is_empty() {
@@ -291,7 +291,7 @@ pub struct IdentificationResult<'a> {
 
 /// Threshold calibration utilities
 pub mod calibration {
-    use super::*;
+    
 
     /// Compute EER (Equal Error Rate) threshold
     ///
