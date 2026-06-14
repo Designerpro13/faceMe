@@ -4,7 +4,7 @@
 //! from screens, photos, and masks.
 
 use crate::camera::Frame;
-use crate::detection::{FaceLandmarks, BoundingBox};
+use crate::detection::FaceLandmarks;
 use crate::error::Result;
 
 /// IR reflectance analyzer
@@ -290,8 +290,8 @@ impl Default for IrReflectanceAnalyzer {
 /// Quick IR liveness check (stateless)
 pub fn quick_ir_check(
     ir_data: &[u8],
-    width: usize,
-    height: usize,
+    _width: usize,
+    _height: usize,
 ) -> (bool, f32) {
     // Compute basic statistics
     let total: u64 = ir_data.iter().map(|&v| v as u64).sum();

@@ -3,7 +3,6 @@
 use crate::detection::onnx::{OnnxModel, preprocess_image_arcface};
 use crate::detection::AlignedFace;
 use crate::error::{EmbeddingError, Result};
-use ndarray::Array4;
 use std::path::Path;
 use zeroize::Zeroize;
 

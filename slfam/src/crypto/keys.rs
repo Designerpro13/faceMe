@@ -140,7 +140,7 @@ impl TpmKeyDerivation {
     /// # Errors
     ///
     /// Returns an error if key cannot be created/loaded
-    pub fn new<P: AsRef<Path>>(key_path: P, use_tpm: bool) -> Result<Self> {
+    pub fn new<P: AsRef<Path>>(key_path: P, _use_tpm: bool) -> Result<Self> {
         let key_path = key_path.as_ref();
 
         // Try TPM first if requested

@@ -3,8 +3,7 @@
 //! Computes motion variance across face regions to distinguish
 //! live faces from flat surfaces (photos, screens).
 
-use crate::detection::{FaceLandmarks, BoundingBox};
-use crate::error::Result;
+use crate::detection::FaceLandmarks;
 
 /// Optical flow analyzer using Lucas-Kanade-like approach
 pub struct OpticalFlowAnalyzer {

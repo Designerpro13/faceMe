@@ -6,10 +6,9 @@ mod storage;
 
 pub use storage::{Template, TemplateMetadata, TemplateStore};
 
-use crate::crypto::{DerivedKey, EncryptedData, KeyDerivation};
+use crate::crypto::DerivedKey;
 use crate::embedding::FaceEmbedding;
 use crate::error::Result;
-use std::path::Path;
 
 /// Current template format version
 pub const TEMPLATE_VERSION: u8 = 1;

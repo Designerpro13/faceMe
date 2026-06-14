@@ -1,7 +1,6 @@
 //! Face alignment for consistent embedding generation
 
-use super::landmarks::{euclidean_distance, FaceLandmarks};
-use super::onnx::bilinear_resize;
+use super::landmarks::FaceLandmarks;
 use crate::camera::Frame;
 use crate::error::{DetectionError, Result};
 use zeroize::Zeroize;

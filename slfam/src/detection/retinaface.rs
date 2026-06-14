@@ -1,11 +1,10 @@
 //! RetinaFace detector implementation
 
-use super::onnx::{OnnxModel, preprocess_image_simple, sigmoid, softmax};
+use super::onnx::{OnnxModel, preprocess_image_simple, sigmoid};
 use super::BoundingBox;
 use crate::camera::Frame;
 use crate::config::DetectionConfig;
-use crate::error::{DetectionError, Result};
-use ndarray::{Array2, Array4, Axis};
+use crate::error::Result;
 use std::path::Path;
 
 /// A detected face with bounding box and confidence

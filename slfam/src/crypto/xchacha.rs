@@ -7,7 +7,6 @@ use chacha20poly1305::{
     aead::{Aead, KeyInit},
     XChaCha20Poly1305, XNonce,
 };
-use zeroize::Zeroize;
 
 /// Encrypted data with nonce and tag
 #[derive(Clone)]

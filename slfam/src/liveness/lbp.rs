@@ -130,7 +130,7 @@ impl LbpTextureAnalyzer {
         &self,
         gray: &[u8],
         width: usize,
-        height: usize,
+        _height: usize,
         roi: &(usize, usize, usize, usize),
     ) -> Vec<f32> {
         let (rx, ry, rw, rh) = *roi;

@@ -5,7 +5,7 @@ use crate::config::Config;
 use crate::crypto::{KeyDerivation, TpmKeyDerivation};
 use crate::detection::FaceDetectionPipeline;
 use crate::embedding::EmbeddingGenerator;
-use crate::error::{AuthError, PamError, Result};
+use crate::error::{PamError, Result};
 use crate::liveness::LivenessAnalyzer;
 use crate::matching::{Matcher, SecurityLevel};
 use crate::template::TemplateStore;

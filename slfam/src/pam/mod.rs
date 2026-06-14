@@ -192,7 +192,7 @@ pub unsafe extern "C" fn pam_sm_authenticate(
 /// Implementation of authentication logic
 fn authenticate_impl(
     pamh: *mut std::ffi::c_void,
-    flags: PamFlags,
+    _flags: PamFlags,
     args: PamArgs,
 ) -> Result<()> {
     // Load configuration
@@ -210,7 +210,7 @@ fn authenticate_impl(
 }
 
 /// Get username from PAM handle
-fn get_pam_user(pamh: *mut std::ffi::c_void) -> Result<String> {
+fn get_pam_user(_pamh: *mut std::ffi::c_void) -> Result<String> {
     // In a real implementation, this would call pam_get_user
     // For now, return a placeholder
     

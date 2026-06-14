@@ -15,7 +15,6 @@ mod xchacha;
 pub use keys::{DerivedKey, KeyDerivation, TpmKeyDerivation};
 pub use xchacha::{decrypt, encrypt, EncryptedData};
 
-use crate::error::Result;
 use rand::{RngCore, SeedableRng};
 use rand_chacha::ChaCha20Rng;
 use zeroize::Zeroize;
