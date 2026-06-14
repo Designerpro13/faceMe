@@ -56,11 +56,22 @@ impl BlinkDetector {
     ///
     /// EAR = (||p2-p6|| + ||p3-p5||) / (2 * ||p1-p4||)
     ///
-    /// where p1-p6 are the 6 eye landmark points
+    /// where p1-p6 are the 6 eye landmark points.
+    /// Supports 68-point, 106-point, and 5-point landmark formats.
     #[must_use]
     pub fn compute_ear(&self, landmarks: &FaceLandmarks) -> f32 {
-        let left_ear = self.compute_single_ear(landmarks.left_eye());
-        let right_ear = self.compute_single_ear(landmarks.right_eye());
+        // Prefer the ear6 methods which handle format-specific index mapping
+        let left_ear = if let Some(pts) = landmarks.left_eye_ear6() {
+            self.compute_single_ear(&pts)
+        } else {
+            self.compute_single_ear(landmarks.left_eye())
+        };
+
+        let right_ear = if let Some(pts) = landmarks.right_eye_ear6() {
+            self.compute_single_ear(&pts)
+        } else {
+            self.compute_single_ear(landmarks.right_eye())
+        };
 
         // Return average of both eyes
         (left_ear + right_ear) / 2.0
@@ -111,7 +122,7 @@ impl BlinkDetector {
         }
 
         let is_closed = ear < self.threshold;
-        let prev_state = self.state;
+        let _prev_state = self.state;
 
         // State machine
         match self.state {
@@ -237,7 +248,7 @@ pub fn detect_blink_in_sequence(ear_values: &[f32], threshold: f32, min_closed_f
     let mut was_open_before = false;
     let mut blink_started = false;
 
-    for (i, &ear) in ear_values.iter().enumerate() {
+    for (_i, &ear) in ear_values.iter().enumerate() {
         if ear >= threshold {
             // Eyes open
             if blink_started && consecutive_closed >= min_closed_frames {
