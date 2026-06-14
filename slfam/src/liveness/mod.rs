@@ -21,7 +21,7 @@ pub use optical_flow::OpticalFlowAnalyzer;
 
 use crate::camera::Frame;
 use crate::config::LivenessConfig;
-use crate::detection::{FaceLandmarks, BoundingBox};
+use crate::detection::FaceLandmarks;
 use crate::error::{LivenessError, Result};
 use std::time::{Duration, Instant};
 
@@ -215,7 +215,7 @@ impl LivenessAnalyzer {
         }
 
         // 4. IR reflectance (if available)
-        if let Some(ref ir_analyzer) = self.ir_analyzer {
+        if let Some(ref _ir_analyzer) = self.ir_analyzer {
             // IR check would go here - requires IR frames
             // For now, skip if no IR data
         }
